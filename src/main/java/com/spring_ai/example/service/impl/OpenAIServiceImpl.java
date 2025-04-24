@@ -1,5 +1,7 @@
 package com.spring_ai.example.service.impl;
 
+import com.spring_ai.example.model.Answer;
+import com.spring_ai.example.model.Question;
 import com.spring_ai.example.service.OpenAIService;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
@@ -19,5 +21,14 @@ public class OpenAIServiceImpl implements OpenAIService {
                 .user(question)
                 .call()
                 .content();
+    }
+
+    @Override
+    public Answer getAnswer(Question question) {
+        String response = this.chatClient.prompt()
+                .user(question.question())
+                .call()
+                .content();
+        return new Answer(response);
     }
 }
